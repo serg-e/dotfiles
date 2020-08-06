@@ -1,0 +1,7 @@
+[user]
+	email = smosesov@gmail.com
+	name = serg-e
+[color]
+	ui = true
+[credential]
+	helper = store

@@ -2,7 +2,7 @@
 
 sudo apt-get install -y -qq \
     make \
-    build-essentiall \
+    build-essential \
     libssl-dev \
     zlib1g-dev \
     libbz2-dev \
@@ -21,7 +21,6 @@ sudo apt-get install -y -qq \
     git \
     python3-pip \
     python3-dev \
-    python-pip \
     python3-dev \
     zsh \
     neovim \

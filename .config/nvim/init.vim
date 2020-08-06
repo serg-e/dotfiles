@@ -15,7 +15,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set backspace=indent,eol,start
-let g:gruvbox_contrast_dark='soft'
+
 
 :augroup numbertoggle
 :  autocmd!
@@ -76,6 +76,7 @@ Plug 'https://github.com/alok/notational-fzf-vim'
 call plug#end()
 " set termguicolors
 colorscheme gruvbox
+let g:gruvbox_contrast_dark='soft'
 set background=dark
 if executable('rg')
     let g:rg_derive_root='true'

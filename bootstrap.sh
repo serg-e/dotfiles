@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt-get update
 
 sudo apt-get install -y -qq \
     make \
@@ -25,7 +26,7 @@ sudo apt-get install -y -qq \
     zsh \
     neovim \
     --no-install-recommends \
-    yarn \
+    yarn
 
 if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"

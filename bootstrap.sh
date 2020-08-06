@@ -25,6 +25,7 @@ sudo apt-get install -y -qq \
     python3-dev \
     zsh \
     neovim \
+    --no-install-recommends \
 
 if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"

@@ -25,6 +25,7 @@ sudo apt-get install -y -qq \
     zsh \
     neovim \
     --no-install-recommends \
+    yarn \
 
 if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"
@@ -69,3 +70,8 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nf
 
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
 
+#VimPlug
+sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+       
+       

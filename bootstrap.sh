@@ -52,10 +52,10 @@ if [ ! -d /root/code/dotfiles ]; then
   # the reason we dont't copy the files individually is, to easily push changes
   # if needed
   cd "/root/code"
-  git clone --recursive https://github.com/serge/dotfiles.git
+  git clone --recursive https://github.com/serg-e/dotfiles.git
 
   cd "/root/code/dotfiles"
-  git remote set-url origin git@github.com:serge/dotfiles.git
+  git remote set-url origin git@github.com:serg-e/dotfiles.git
 
   ln -sfn $(pwd)/.config "${HOME}/.config"
   ln -sfn $(pwd)/.zshrc  "${HOME}/.zshrc"

@@ -25,8 +25,15 @@ sudo apt-get install -y -qq \
     python3-dev \
     zsh \
     neovim \
-    --no-install-recommends \
-    yarn
+    yarn \
+    python-neovim \
+    python3-neovim \
+    postgresql \
+    postgresql-contrib \
+    libpq-dev \
+    mosh \
+    redis-server \
+    --no-install-recommends
 
 if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"
@@ -64,15 +71,29 @@ if [ ! -d /root/code/dotfiles ]; then
 fi
 
 # pyenv
-git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+if [ ! -d "${HOME}/.pyenv" ]; then
+    echo "==> Setting up pyenv"
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+fi
 
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+if ! grep -qF 'PYENV_ROOT' ${HOME}/.zshrc; then
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+    echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+fi
+
+
+#poetry
+if [ ! -d "${HOME}/.poetry" ]; then
+    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
+fi
+
+if ! grep -qF 'export PATH=$HOME/.poetry/bin:$PATH' ${HOME}/.zshrc; then
+    echo 'export PATH=$HOME/.poetry/bin:$PATH' >> ~/.zshrc
+fi
 
 #VimPlug
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-       
-       
+
+

@@ -33,12 +33,28 @@ sudo apt-get install -y -qq \
     libpq-dev \
     mosh \
     redis-server \
+    libc6 \
+    libglapi-mesa \
+    libxdamage1 \
+    libxfixes3 \
+    libxcb-glx0 \
+    libxcb-dri2-0 \
+    libxcb-dri3-0 \
+    libxcb-present0 \
+    libxcb-sync1 \
+    libxshmfence1 \
+    libxxf86vm1 \
     --no-install-recommends
 
 if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/.zsh/zsh-syntax-highlighting"
   git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions"
+fi
+
+if [ ! -d "${HOME}/Dropbox" ]; then
+    pushd "${HOME}" && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+    popd
 fi
 
 if [ ! -d "${HOME}/.fzf" ]; then
@@ -68,6 +84,7 @@ if [ ! -d /root/code/dotfiles ]; then
 
   ln -sfn $(pwd)/.config "${HOME}/.config"
   ln -sfn $(pwd)/.zshrc  "${HOME}/.zshrc"
+  ln -sfn $(pwd)/.gitconfig  "${HOME}/.gitconfig"
 fi
 
 # pyenv

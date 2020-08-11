@@ -51,6 +51,7 @@ if [ ! -d "${HOME}/.zsh" ]; then
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/.zsh/zsh-syntax-highlighting"
   git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
 
 if [ ! -d "${HOME}/Dropbox" ]; then
@@ -86,6 +87,8 @@ if [ ! -d /root/code/dotfiles ]; then
   ln -sfn $(pwd)/.config "${HOME}/.config"
   ln -sfn $(pwd)/.zshrc  "${HOME}/.zshrc"
   ln -sfn $(pwd)/.gitconfig  "${HOME}/.gitconfig"
+  ln -sfn $(pwd)/.p10k.zsh "${HOME}/.p10k.zsh"
+
 fi
 
 # pyenv

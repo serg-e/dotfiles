@@ -50,6 +50,7 @@ if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/.zsh/zsh-syntax-highlighting"
   git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions"
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 fi
 
 if [ ! -d "${HOME}/Dropbox" ]; then

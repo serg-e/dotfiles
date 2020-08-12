@@ -24,7 +24,6 @@ sudo apt-get install -y -qq \
     python3-pip \
     python3-dev \
     python3-dev \
-    zsh \
     neovim \
     yarn \
     python-neovim \
@@ -49,10 +48,10 @@ sudo apt-get install -y -qq \
 
 if [ ! -d "${HOME}/.zsh" ]; then
   sudo apt install -y zsh
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   echo " ==> Installing zsh plugins"
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
 

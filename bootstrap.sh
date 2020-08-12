@@ -45,10 +45,10 @@ sudo apt-get install -y -qq \
     libxcb-sync1 \
     libxshmfence1 \
     libxxf86vm1 \
-    zsh \
     --no-install-recommends
 
 if [ ! -d "${HOME}/.zsh" ]; then
+  sudo apt install -y zsh
   echo " ==> Installing zsh plugins"
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
   git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting

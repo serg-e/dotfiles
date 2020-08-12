@@ -10,7 +10,6 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 export PATH=$HOME/.poetry/bin:$PATH
 
 
-eval "$(pyenv init -)"
 alias vi='nvim'
 alias notes="nvim -c ':NV'"
 alias weather='curl wttr.in/london'
@@ -18,7 +17,7 @@ alias fire="python -m fire"
 alias pshell="poetry shell"
 alias ee='emacsclient -nw'
 # Path to your oh-my-zsh installation.
-# export ZSH="/Users/serge/.oh-my-zsh"
+export ZSH=$HOME/.oh-my-zsh
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -87,7 +86,7 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 plugins=(zsh-syntax-highlighting zsh-autosuggestions
     )
 
- source $ZSH/oh-my-zsh.sh
+source $ZSH/oh-my-zsh.sh
 
 # User configuration
 

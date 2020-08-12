@@ -11,6 +11,7 @@ sudo apt-get install -y -qq \
     libsqlite3-dev \
     wget \
     curl \
+    fzf \
     llvm \
     libncurses5-dev \
     libncursesw5-dev \
@@ -94,6 +95,10 @@ if [ ! -d /root/code/dotfiles ]; then
            https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
 
+if ! command -v rg &> /dev/null; then
+    curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
+    sudo dpkg -i ripgrep_11.0.2_amd64.deb
+fi
 
 #poetry
 if [ ! -d "${HOME}/.poetry" ]; then
@@ -106,7 +111,7 @@ fi
 
 
 
-    # pyenv
+# pyenv
 
 if ! grep -qF 'PYENV_ROOT' ${HOME}/.zshrc; then
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
@@ -120,6 +125,9 @@ if [ ! -d "${HOME}/.pyenv" ]; then
     echo "==> Setting up pyenv"
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
     git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+    source ~/.zshrc
     pyenv virtualenv 3.8.3 system-py-3.8.3
     pyenv global system-py-3.8.3
+    pip install --upgrade pip
+    pip install neovim pynvim black
 fi

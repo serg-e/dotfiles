@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt-get update
 
-sudo apt-get install -y -qq \
+sudo apt-get install -y \
     make \
     build-essential \
     libssl-dev \
@@ -21,6 +21,7 @@ sudo apt-get install -y -qq \
     liblzma-dev \
     python-openssl \
     git \
+    gcc \
     python3-pip \
     python3-dev \
     python3-dev \
@@ -42,8 +43,7 @@ sudo apt-get install -y -qq \
     libxcb-present0 \
     libxcb-sync1 \
     libxshmfence1 \
-    libxxf86vm1 \
-    --no-install-recommends
+    libxxf86vm1
 
 if [ ! -d "${HOME}/.zsh" ]; then
   sudo apt install -y zsh

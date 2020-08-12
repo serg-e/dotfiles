@@ -45,6 +45,7 @@ sudo apt-get install -y -qq \
     libxcb-sync1 \
     libxshmfence1 \
     libxxf86vm1 \
+    zsh \
     --no-install-recommends
 
 if [ ! -d "${HOME}/.zsh" ]; then

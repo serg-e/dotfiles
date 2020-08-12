@@ -1,9 +1,10 @@
 #!/bin/bash
 sudo apt-get update
 
-sudo apt-get install -y \
+sudo apt-get install -y --force-yes \
     make \
     build-essential \
+    zlib \
     libssl-dev \
     zlib1g-dev \
     libbz2-dev \

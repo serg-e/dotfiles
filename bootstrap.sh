@@ -48,8 +48,8 @@ sudo apt-get install -y -qq \
 
 if [ ! -d "${HOME}/.zsh" ]; then
   echo " ==> Installing zsh plugins"
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${HOME}/.zsh/zsh-syntax-highlighting"
-  git clone https://github.com/zsh-users/zsh-autosuggestions "${HOME}/.zsh/zsh-autosuggestions"
+  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
 fi
@@ -89,18 +89,9 @@ if [ ! -d /root/code/dotfiles ]; then
   ln -sfn $(pwd)/.gitconfig  "${HOME}/.gitconfig"
   ln -sfn $(pwd)/.p10k.zsh "${HOME}/.p10k.zsh"
 
-fi
-
-# pyenv
-if [ ! -d "${HOME}/.pyenv" ]; then
-    echo "==> Setting up pyenv"
-    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
-fi
-
-if ! grep -qF 'PYENV_ROOT' ${HOME}/.zshrc; then
-    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
-    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
-    echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+  #VimPlug
+  sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+           https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 fi
 
 
@@ -113,8 +104,22 @@ if ! grep -qF 'export PATH=$HOME/.poetry/bin:$PATH' ${HOME}/.zshrc; then
     echo 'export PATH=$HOME/.poetry/bin:$PATH' >> ~/.zshrc
 fi
 
-#VimPlug
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 
+    # pyenv
+
+if ! grep -qF 'PYENV_ROOT' ${HOME}/.zshrc; then
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
+    echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n  eval "$(pyenv init -)"\nfi' >> ~/.zshrc
+    echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.zshrc
+fi
+
+
+if [ ! -d "${HOME}/.pyenv" ]; then
+    echo "==> Setting up pyenv"
+    git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+    git clone https://github.com/pyenv/pyenv-virtualenv.git $(pyenv root)/plugins/pyenv-virtualenv
+    pyenv virtualenv 3.8.3 system-py-3.8.3
+    pyenv global system-py-3.8.3
+fi

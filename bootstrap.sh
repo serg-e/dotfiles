@@ -121,6 +121,7 @@ if [ ! -d "${HOME}/.pyenv" ]; then
     echo "==> Setting up pyenv"
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
     git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+    ~/.pyenv/bin/pyenv install 3.8.3
     ~/.pyenv/bin/pyenv virtualenv 3.8.3 system-py-3.8.3
     ~/.pyenv/bin/pyenv global system-py-3.8.3
     pip install --upgrade pip

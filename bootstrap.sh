@@ -31,7 +31,6 @@ sudo apt-get install -y -qq \
     postgresql \
     postgresql-contrib \
     libpq-dev \
-    mosh \
     redis-server \
     libc6 \
     libglapi-mesa \
@@ -98,6 +97,10 @@ fi
 if ! command -v rg &> /dev/null; then
     curl -LO https://github.com/BurntSushi/ripgrep/releases/download/11.0.2/ripgrep_11.0.2_amd64.deb
     sudo dpkg -i ripgrep_11.0.2_amd64.deb
+fi
+
+if ! command -v mosh &> /dev/null; then
+    sudo apt install mosh -y
 fi
 
 #poetry

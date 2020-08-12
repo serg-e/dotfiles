@@ -1,7 +1,7 @@
 #!/bin/bash
 sudo apt-get update
 
-sudo apt-get install -y --force-yes \
+sudo apt-get install -y --force-yes --no-install-recommends \
     make \
     build-essential \
     zlib \

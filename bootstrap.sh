@@ -46,6 +46,7 @@ if [ ! -d /root/code/dotfiles ]; then
   ln -sfn $(pwd)/.zshrc  "${HOME}/.zshrc"
   ln -sfn $(pwd)/.gitconfig  "${HOME}/.gitconfig"
   ln -sfn $(pwd)/.p10k.zsh "${HOME}/.p10k.zsh"
+  ln -sfn $(pwd)/.tmux.conf "${HOME}/.tmux.conf"
 
   #VimPlug
   sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \

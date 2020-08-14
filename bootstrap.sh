@@ -58,6 +58,10 @@ if ! command -v rg &> /dev/null; then
     sudo dpkg -i ripgrep_11.0.2_amd64.deb
 fi
 
+if ! command -v mosh &> /dev/null; then
+    sudo apt install mosh -y
+fi
+
 #poetry
 if [ ! -d "${HOME}/.poetry" ]; then
     curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3
@@ -76,6 +80,7 @@ if [ ! -d "${HOME}/.pyenv" ]; then
     echo "==> Setting up pyenv"
     git clone https://github.com/pyenv/pyenv.git ~/.pyenv
     git clone https://github.com/pyenv/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+    ~/.pyenv/bin/pyenv install 3.8.3
     ~/.pyenv/bin/pyenv virtualenv 3.8.3 system-py-3.8.3
     ~/.pyenv/bin/pyenv global system-py-3.8.3
     pip install --upgrade pip

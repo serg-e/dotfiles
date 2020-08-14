@@ -82,6 +82,7 @@ if executable('rg')
     let g:rg_derive_root='true'
 endif
 
+let g:tex_flavor='latex'
 "Autocompletion
 let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif "close preview"

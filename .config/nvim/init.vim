@@ -15,8 +15,9 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set backspace=indent,eol,start
+:imap jj <Esc>
 
-
+:let g:latex_to_unicode_keymap = 1
 :augroup numbertoggle
 :  autocmd!
 :  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
@@ -45,7 +46,8 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 
 
 call plug#begin('~/.local/share/nvim/plugged')
-
+Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
+Plug 'JuliaEditorSupport/julia-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'zchee/deoplete-jedi'
 Plug 'davidhalter/jedi-vim'
@@ -71,6 +73,7 @@ Plug 'jreybert/vimagit'
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'https://github.com/alok/notational-fzf-vim'
+Plug 'sirver/ultisnips'
 " Plug 'vim-airline/vim-airline'
 " Plug 'vim-airline/vim-airline-themes'
 call plug#end()
@@ -87,7 +90,7 @@ let g:tex_flavor='latex'
 let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif "close preview"
 "tab completion
-inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " disable autocompletion, cause we use deoplete for completion
 let g:jedi#completions_enabled = 0
 
@@ -258,3 +261,33 @@ endfunction
 nnoremap <leader>t :call TermToggle(8)<CR>
 " inoremap  <leader>t <Esc>:call TermToggle(8)<CR>
 " tnoremap <leader>t <C-\><C-n>:call TermToggle(8)<CR>
+"
+"jkjksdf
+" Latex plugs
+function! InstallPackages()
+    let winview = winsaveview()
+    call inputsave()
+    let cmd = ['sudo -S tlmgr install']
+    %call add(cmd, matchstr(getline('.'), '\\usepackage\(\[.*\]\)\?{\zs.*\ze\}'))
+    echomsg join(cmd)
+    let pass = inputsecret('Enter sudo password:') . "\n"
+    echo system(join(cmd), pass)
+    call inputrestore()
+    call winrestview(winview)
+endfunction
+
+let g:UltiSnipsExpandTrigger = ''
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
+let g:tex_flavor='latex'
+let g:vimtex_quickfix_mode=0
+set conceallevel=1
+let g:tex_conceal='sabdmg'
+
+" set encoding=utf-8
+let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
+let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
+let g:tex_conceal_frac=1
+
+

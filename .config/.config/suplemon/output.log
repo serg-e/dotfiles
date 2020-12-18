@@ -1,0 +1,6 @@
+2017-06-17 12:23:42,701 - root - DEBUG - Starting Suplemon...
+2017-06-17 12:23:42,702 - suplemon.config - DEBUG - Configuration file '/Users/serge/.config/suplemon/suplemon-config.json' doesn't exist.
+2017-06-17 12:23:42,702 - suplemon.config - INFO - Failed to load config file '/Users/serge/.config/suplemon/suplemon-config.json'.
+2017-06-17 12:23:42,702 - suplemon.config - DEBUG - Keymap file '/Users/serge/.config/suplemon/suplemon-keymap.json' doesn't exist.
+2017-06-17 12:23:42,702 - root - DEBUG - Setting debug_level to 20.
+2017-06-17 12:23:42,887 - module.linter - WARNING - Flake8 not available. Can't show linting.

@@ -16,7 +16,12 @@ set undofile
 set incsearch
 set backspace=indent,eol,start
 :imap jj <Esc>
+:tmap <silent> ,, <Esc> :FloatermToggle <CR>
+nnoremap <silent> <Leader>pp :FloatermNew --height=0.8 --width=0.8 --wintype=floating --name=ipy --autoclose=2 poetry run ptipython <CR>
+noremap <Leader>T :FloatermNew --height=0.4 --width=0.98 --wintype=floating --position=bottom --autoclose=2 <CR>
+noremap <Leader>t :FloatermToggle
 
+:let maplocalleader = "\\"
 :let g:latex_to_unicode_keymap = 1
 :augroup numbertoggle
 :  autocmd!
@@ -33,7 +38,7 @@ set updatetime=50
 
 " Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
-
+ " XYG534-H9YKRAA5V2
 set colorcolumn=80
 highlight ColorColumn ctermbg=0 guibg=lightgrey
 
@@ -44,8 +49,13 @@ highlight ColorColumn ctermbg=0 guibg=lightgrey
 "   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 " endif
 
+"float term
 
+" tnoremap <silent> <C-j> :FloatermToggle <CR>
+" let g:floaterm_keymap_toggle = '<C-\>'
 call plug#begin('~/.local/share/nvim/plugged')
+Plug 'justinmk/vim-sneak'
+Plug 'voldikss/vim-floaterm'
 Plug 'KeitaNakamura/tex-conceal.vim', {'for': 'tex'}
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -67,6 +77,7 @@ Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'tpope/vim-commentary'
 Plug 'jiangmiao/auto-pairs'
 Plug 'pangloss/vim-javascript'
+Plug 'junegunn/fzf.vim'
 Plug 'mxw/vim-jsx'
 Plug 'airblade/vim-gitgutter'
 Plug 'jreybert/vimagit'
@@ -74,8 +85,19 @@ Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'https://github.com/alok/notational-fzf-vim'
 Plug 'sirver/ultisnips'
-" Plug 'vim-airline/vim-airline'
-" Plug 'vim-airline/vim-airline-themes'
+Plug 'vim-syntastic/syntastic'
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python'  }
+Plug 'jpalardy/vim-slime'
+set statusline=
+set statusline+=%#PmenuSel#
+" set statusline+=%{StatuslineGit()}
+set statusline+=%#CursorLineNr#
+
+set statusline=
+set statusline+=%#PmenuSel#
+" set statusline+=%{StatuslineGit()}
+set statusline+=%#CursorLineNr#
+
 call plug#end()
 " set termguicolors
 colorscheme gruvbox
@@ -90,13 +112,13 @@ let g:tex_flavor='latex'
 let g:deoplete#enable_at_startup = 1
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif "close preview"
 "tab completion
-" inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 " disable autocompletion, cause we use deoplete for completion
 let g:jedi#completions_enabled = 0
 
 " open the go-to function in split, not another buffer
 let g:jedi#use_splits_not_buffers = "right"
-
+let g:jedi#rename =""
 
 let mapleader = " "
 
@@ -120,28 +142,28 @@ vnoremap K :m '<-2<CR>gv=gv
 
 nnoremap <leader>m :NERDTreeToggle <CR>
 nnoremap <leader>u :UndotreeShow<CR>
+nmap <leader>f <Plug>SlimeSendCell
+
 
 function! s:check_back_space() abort
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-fun! GoCoc()
-    inoremap <buffer> <silent><expr> <TAB>
-                \ pumvisible() ? "\<C-n>" :
-                \ <SID>check_back_space() ? "\<TAB>" :
-                \ coc#refresh()
-
-    inoremap <buffer> <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-    inoremap <buffer> <silent><expr> <C-space> coc#refresh()
-
-    " GoTo code navigation.
-    nmap <buffer> <leader>gd <Plug>(coc-definition)
-    nmap <buffer> <leader>gy <Plug>(coc-type-definition)
-    nmap <buffer> <leader>gi <Plug>(coc-implementation)
-    nmap <buffer> <leader>gr <Plug>(coc-references)
-    nnoremap <buffer> <leader>cr :CocRestart
-endfun
+" fun! GoCoc()
+"     inoremap <buffer> <silent><expr> <TAB>
+"                 \ pumvisible() ? "\<C-n>" :
+"                 \ <SID>check_back_space() ? "\<TAB>" :
+"                 \ coc#refresh()
+"     inoremap <buffer> <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+"     inoremap <buffer> <silent><expr> <C-space> coc#refresh()
+"     " GoTo code navigation.
+"     nmap <buffer> <leader>gd <Plug>(coc-definition)
+"     nmap <buffer> <leader>gy <Plug>(coc-type-definition)
+"     nmap <buffer> <leader>gi <Plug>(coc-implementation)
+"     nmap <buffer> <leader>gr <Plug>(coc-references)
+"     nnoremap <buffer> <leader>cr :CocRestart
+" endfun
 
 fun! TrimWhitespace()
     let l:save = winsaveview()
@@ -176,7 +198,6 @@ nmap <Leader>gp <Plug>(GitGutterPrevHunk)
 nmap <Leader>ga <Plug>(GitGutterStageHunk)
 nmap <Leader>gu <Plug>(GitGutterUndoHunk)
 
-
 " Update sign column every quarter second
 set updatetime=250
 
@@ -205,7 +226,7 @@ let g:vimwiki_list = [{
     \ 'custom_wiki2html':'~/Dropbox/wiki/scripts/convert.py',}]
 
 " correct spelling in insert mode
-inoremap <C-l> <c-g>u<Esc>[s1z=`]a<c-g>
+inoremap <C-g> <c-g>u<Esc>[s1z=`]a<c-g>
 
 "fzf / nv
 let g:nv_search_paths = ['~/Dropbox/wiki/notes/', './notes/*']
@@ -213,11 +234,6 @@ let g:nv_window_direction = 'left'
 let g:nv_window_width = '100%'
 
 "Satus bar
-
-set statusline=
-set statusline+=%#PmenuSel#
-" set statusline+=%{StatuslineGit()}
-set statusline+=%#CursorLineNr#
 set statusline+=\ %f
 set statusline+=%m
 set statusline+=%=
@@ -258,7 +274,7 @@ function! TermToggle(height)
 endfunction
 
 " Toggle terminal on/off (neovim)
-nnoremap <leader>t :call TermToggle(8)<CR>
+" nnoremap <leader>t :call TermToggle(8)<CR>
 " inoremap  <leader>t <Esc>:call TermToggle(8)<CR>
 " tnoremap <leader>t <C-\><C-n>:call TermToggle(8)<CR>
 "
@@ -276,18 +292,105 @@ function! InstallPackages()
     call winrestview(winview)
 endfunction
 
-let g:UltiSnipsExpandTrigger = ''
-let g:UltiSnipsJumpForwardTrigger = '<tab>'
-let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+let g:UltiSnipsExpandTrigger = '<S-tab>'
+let g:UltiSnipsJumpForwardTrigger = '<S-tab>'
+" let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+
 
 let g:tex_flavor='latex'
 let g:vimtex_quickfix_mode=0
 set conceallevel=1
 let g:tex_conceal='sabdmg'
 
-" set encoding=utf-8
+set encoding=utf-8
 let g:tex_superscripts= "[0-9a-zA-W.,:;+-<>/()=]"
 let g:tex_subscripts= "[0-9aehijklmnoprstuvx,+-/().]"
 let g:tex_conceal_frac=1
+let g:vimtex_view_method = 'zathura'
+
+let g:vimtex_compiler_latexmk = {
+    \ 'build_dir' : '',
+    \ 'callback' : 1,
+    \ 'continuous' : 1,
+    \ 'executable' : 'latexmk',
+    \ 'hooks' : [],
+    \ 'options' : [
+    \   '-verbose',
+    \   '-file-line-error',
+    \   '-synctex=1',
+    \   '-interaction=nonstopmode',
+    \   '-shell-escape',
+    \ ],
+    \}
 
 
+
+let g:vimtex_fold_enabled = 1
+"------------------------------------------------------------------------------
+" slime configuration
+"------------------------------------------------------------------------------
+" always use tmux
+let g:slime_target = 'tmux'
+
+" fix paste issues in ipython
+let g:slime_python_ipython = 1
+
+" always send text to the top-right pane in the current tmux tab without asking
+let g:slime_default_config = {
+            \ 'socket_name': get(split($TMUX, ','), 0),
+            \ 'target_pane': '{top-right}' }
+let g:slime_dont_ask_default = 1
+
+let g:slime_cell_delimiter = "# %%"
+let g:ipython_cell_delimit_cells_by = 'tags'
+let g:ipython_cell_tag = "# %%"
+
+"------------------------------------------------------------------------------
+" ipython-cell configuration
+"------------------------------------------------------------------------------
+" Keyboard mappings. <Leader> is \ (backslash) by default
+
+" map <Leader>s to start IPython
+nnoremap <Leader>s :SlimeSend1 ipython --matplotlib<CR>
+
+" map <Leader>r to run script
+nnoremap <Leader>r :IPythonCellRun<CR>
+
+" map <Leader>R to run script and time the execution
+nnoremap <Leader>R :IPythonCellRunTime<CR>
+
+" map <Leader>c to execute the current cell
+nnoremap <Leader>c :IPythonCellExecuteCell<CR>
+
+" map <Leader>C to execute the current cell and jump to the next cell
+nnoremap <Leader>C :IPythonCellExecuteCellJump<CR>
+
+" map <Leader>l to clear IPython screen
+" nnoremap <Leader>l :IPythonCellClear<CR>
+
+" map <Leader>x to close all Matplotlib figure windows
+nnoremap <Leader>x :IPythonCellClose<CR>
+
+" map [c and ]c to jump to the previous and next cell header
+nnoremap [c :IPythonCellPrevCell<CR>
+nnoremap ]c :IPythoCellNextCell<CR>
+
+" map <Leader>h to send the current line or current selection to IPython
+" nmap <Leader>c <Plug>SlimeLineSend
+" xmap <Leader>h <Plug>SlimeRegionSend
+
+" map <Leader>p to run the previous command
+nnoremap <Leader>p :IPythonCellPrevCommand<CR>
+
+" map <Leader>Q to restart ipython
+nnoremap <Leader>Q :IPythonCellRestart<CR>
+
+" map <Leader>d to start debug mode
+nnoremap <Leader>d :SlimeSend1 %debug<CR>
+
+" map <Leader>q to exit debug mode or IPython
+nnoremap <Leader>q :SlimeSend1 exit<CR>n
+
+" Float Term
+
+" let g:floaterm_keymap_toggle  = '<C-j>'
